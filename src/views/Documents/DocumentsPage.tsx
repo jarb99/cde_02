@@ -2,7 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import Box from "@material-ui/core/Box";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import Grid from "@material-ui/core/Grid";
-// import Properties from "./Properties";
+// import Properties from "./Properties"; //
 // import Subscriptions from "./Subscriptions";
 import * as data from "./tempData.json";
 
