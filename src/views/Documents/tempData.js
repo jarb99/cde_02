@@ -1,4 +1,4 @@
-[
+const data = [
   {
     "Discipline": "Architectural",
     "num": "A-26508-CPA-01-DR-2004",
@@ -468,3 +468,5 @@
     "Set Name": "Prelim Drawing Set"
   }
 ]
+
+export default data

@@ -1,0 +1,31 @@
+
+.tabulator {
+    font-size: 11px !important;
+  }
+  
+  .tabulator-cell {
+    border-right: none !important;
+  }
+  
+  .tabulator .tabulator-header {
+    color: #ffffff;
+    /* background-color: #2e2f30; */
+    font-weight: normal !important;
+  }
+  
+  .tabulator .tabulator-header {
+    color: #ffffff !important;
+  }
+  
+  .tabulator .tabulator-header .tabulator-col {
+    /* background-color: #2e2f30 !important; */
+    border-right: none !important;
+  }
+  
+  .tabulator-row-odd {
+    background-color: rgb(238, 238, 238) !important;
+  }
+  
+  .tabulator-row.tabulator-selected {
+    background-color: #f5763174 !important;
+  }
