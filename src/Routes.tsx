@@ -5,8 +5,7 @@ import DashboardLayout from "./layouts/Dashboard";
 import { parseAddOrderUrlSearchParams } from "./views/Orders/OrderPage";
 import * as History from "history";
 import { OrderPage } from "./views/Orders";
-import { DocumentsPage } from "./views/Documents";
-import { Dashboard, Invoices, Subscriptions, Users } from "./views";
+import { Projects, Dashboard, Subscriptions, Users, Settings, Documents, Workflows } from "./views";
 import Customers from "./views/Customers/Customers";
 import CustomerDashboard from "./views/Customers/CustomerDashboard";
 import ResellerDashboard from "./views/Resellers/ResellerDashboard";
@@ -23,6 +22,8 @@ const ordersPath = "/orders";
 const addOrderPath = ordersPath + "/add";
 const orderPath = ordersPath + "/:orderId";
 const subscriptionsPath = "/subscriptions";
+
+const projectID = '/<projectID>'; // TODO: LINK ACTUAL PROJECT ID
 
 const getReferrer = (location: Location): History.Location | undefined =>
   !location.pathname.startsWith(loginPath)
@@ -46,9 +47,19 @@ const Routes: RouteConfig[] = [
     component: DashboardLayout,
     routes: [
       {
-        path: "/dashboard",
+        path: projectID + "/projects",
+        exact: true,
+        component: () => <Projects/>,
+      },
+      {
+        path: projectID + "/dashboard",
         exact: true,
         component: () => <Dashboard/>,
+      },
+      {
+        path: projectID + "/workflows",
+        exact: true,
+        component: () => <Workflows/>,
       },
       {
         path: ordersPath,
@@ -91,15 +102,15 @@ const Routes: RouteConfig[] = [
         component: () => <OrderPage/>
       },
       {
-        path: '/documents',
+        path: projectID + '/documents',
         exact: true,
-        component: () => <DocumentsPage />
+        component: () => <Documents />
       },
-      {
-        path: "/invoices",
-        exact: true,
-        component: () => <Invoices/>
-      },
+      // {
+      //   path: "/invoices",
+      //   exact: true,
+      //   component: () => <Invoices/>
+      // },
       {
         path: subscriptionsPath + "/:tab",
         exact: true,
@@ -124,6 +135,11 @@ const Routes: RouteConfig[] = [
         path: "/users",
         exact: true,
         component: () => <Users/>
+      },
+      {
+        path: "/settings",
+        exact: true,
+        component: () => <Settings/>
       },
       {
         path: userPath,

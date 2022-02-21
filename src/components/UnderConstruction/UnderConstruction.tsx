@@ -24,7 +24,7 @@ const styles = (theme: Theme) =>
 const useStyles = makeStyles(styles);
 
 interface UnderConstructionProps {
-  title: string;
+  title?: string;
 }
 
 const UnderConstruction: React.FC<UnderConstructionProps> = (
@@ -34,11 +34,11 @@ const UnderConstruction: React.FC<UnderConstructionProps> = (
   return (
     <Page
       className={classes.root}
-      title={`${props.title} | Under Construction`}
+      title={`${props.title ? props.title : 'Xrev'} | Under Construction`}
     >
       <Container maxWidth="lg">
-        <Header title={props.title} />
-        <Divider className={classes.divider} />
+        {props.title && <Header title={props.title} />}
+        {props.title && <Divider className={classes.divider} />}
         <Details />
       </Container>
     </Page>

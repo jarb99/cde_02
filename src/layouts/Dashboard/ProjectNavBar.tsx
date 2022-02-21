@@ -1,19 +1,10 @@
 import * as React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import { Grid, useTheme } from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
-import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
-import TimelineOutlinedIcon from "@material-ui/icons/TimelineOutlined";
 // import GridViewOutlinedIcon from "@material-ui/icons/GridViewOutlined";
 import IconButton from "@material-ui/core/IconButton";
-import Link from "@material-ui/core/Link";
-import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import Box from "@material-ui/core/Box";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
@@ -21,12 +12,15 @@ import Typography from "@material-ui/core/Typography";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
+const projectTitle = "16008: JUBILEE PLACE";
+
 interface HeaderProps {
-  tabValue: number;
-  handleTabChange: (event: React.SyntheticEvent, value: number) => void;
+  title: string;
+  tabValue?: number;
+  handleTabChange?: (event: React.SyntheticEvent, value: number) => void;
 }
 //onChange={props.handleTabChange}>
-export function Navbar(props: HeaderProps) {
+export function ProjectNavBar(props: HeaderProps) {
   const theme = useTheme();
   return (
     <React.Fragment>
@@ -50,16 +44,9 @@ export function Navbar(props: HeaderProps) {
           >
             <Grid item>
               <Typography component="h3" variant="h4">
-                16008: JUBILEE PLACE
+                 {projectTitle} | <span style={{ color: "grey" }}>{props.title}</span>
               </Typography>
             </Grid>
-            {/* <Grid item xs container style={{paddingTop:"0px"}}>
-              <Tabs value={props.tabValue} > 
-                {/* <Tab icon={<GridViewOutlinedIcon />} label="PROJECT" /> */}
-                {/* <Tab icon={<FileCopyOutlinedIcon />} label="DOCS" />
-                <Tab icon={<TimelineOutlinedIcon />} label="TIMELINE" />
-              </Tabs>
-            </Grid> */} 
             <Grid item>
               <Tooltip title="Alerts • No alerts">
                 <IconButton color="inherit">
@@ -77,4 +64,4 @@ export function Navbar(props: HeaderProps) {
   );
 }
 
-export default Navbar;
+export default ProjectNavBar;

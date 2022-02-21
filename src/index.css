@@ -29,3 +29,31 @@
   .tabulator-row.tabulator-selected {
     background-color: #f5763174 !important;
   }
+
+
+
+
+
+.react-flow {
+  border: 1px solid grey;
+  border-radius: 7px;
+}
+
+.react-flow__node {
+  /* background-color: grey;
+  color: white;
+  font-weight: 700;
+  border: none; */
+}
+
+.react-flow__node-default.selected, .react-flow__node-default.selected:hover {
+  box-shadow: 0 0 0 2px #1a192b;
+}
+
+.react-flow__node-input.selected, .react-flow__node-input.selected:hover {
+  box-shadow: 0 0 0 2px #0041d0;
+}
+
+.react-flow__node-output.selected, .react-flow__node-output.selected:hover {
+  box-shadow: 0 0 0 2px #ff0072;
+}

@@ -9,6 +9,10 @@ import EventAvailableOutlinedIconElement from '@material-ui/icons/EventAvailable
 import EventBusyOutlinedIconElement from '@material-ui/icons/EventBusyOutlined';
 import HistoryIconElement from '@material-ui/icons/History';
 import AccountBoxIconElement from '@material-ui/icons/AccountBox';
+import SettingsIcon from '@material-ui/icons/Settings';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
 
 // JSX.Element -> React.ComponentType<SvgIconProps>
 // see https://stackoverflow.com/a/52559982
@@ -24,52 +28,58 @@ const AccountBoxIcon:  React.ComponentType<SvgIconProps> = AccountBoxIconElement
 
 const NavItems: NavItemConfig[] = [
   {
-    title: "Project",
-    href: "/dashboard",
+    title: "Projects",
+    href: "/projects",
     icon: DashboardIcon
   },
   {
-    title: "Documents",
-    href: "/documents",
-    icon: ListAltOutlinedIcon
-  },
-  {
-    title: "Invoices",
-    href: "/invoices",
-    icon: ReceiptOutlinedIcon
-  },
-  {
-    title: "Subscriptions",
-    href: "/subscriptions",
-    icon: ConfirmationNumberOutlinedIcon,
+    title: "16008: JUBLIEE...",
+    href: "/<projectID>", // TODO: LINK ACTUAL PROJECT ID
+    icon: HomeWorkIcon,
+    isOpen: true,
     items: [
       {
-        title: "Current",
-        href: "/current",
-        icon: EventAvailableOutlinedIcon,
+        title: "Dashboard",
+        href: "/dashboard",
+        icon: DashboardIcon
       },
       {
-        title: "Expired",
-        href: "/expired",
-        icon: EventBusyOutlinedIcon,
+        title: "Documents",
+        href: "/documents",
+        icon: ListAltOutlinedIcon
       },
       {
-        title: "All",
-        href: "/all",
-        icon: HistoryIcon,
+        title: "Timeline",
+        href: "/timeline",
+        icon: TimelineIcon
+      },
+      {
+        title: "Workflows",
+        href: "/workflows",
+        icon: AccountTreeIcon
+      },
+      {
+        title: "Subscriptions",
+        href: "/subscriptions",
+        icon: ConfirmationNumberOutlinedIcon
+      },
+      {
+        title: "Settings",
+        href: "/settings",
+        icon: SettingsIcon
       },
     ]
   },
   {
-    title: "Customers",
-    href: "/customers",
-    icon: AccountBoxIcon
+    title: "Open Items",
+    href: "/openitems",
+    icon: PeopleOutlinedIcon
   },
   {
-    title: "Users",
+    title: "User",
     href: "/users",
     icon: PeopleOutlinedIcon
-  }
+  },
 ];
 
 export default NavItems;

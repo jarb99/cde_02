@@ -8,7 +8,7 @@ import data from "./tempData";
 
 import Header from "./Header";
 import Toolbar from "./Toolbar";
-import Navbar from "./Navbar";
+import ProjectNavBar from "../../layouts/Dashboard/ProjectNavBar";
 
 const Table = () => {
    const theme = useTheme();
@@ -134,7 +134,7 @@ const documentsReducer = (
    console.log("reducer output: ", type, payload);
 };
 
-const DocumentsPage = () => {
+const Documents = () => {
    //   const [state, dispatch] = useReducer(documentsReducer, {
    //     data: null,
    //     columns: null,
@@ -157,7 +157,10 @@ const DocumentsPage = () => {
             }}
          >
             {/* <Header title="16008: JUBILIE PLACE"/> */}
-            <Navbar handleTabChange={handleTabChange} tabValue={tab} />
+            <ProjectNavBar 
+            title={"DOCUMENTS"}
+            handleTabChange={handleTabChange} 
+            tabValue={tab} />
             <Toolbar />
             <Box
                display="flex"
@@ -192,4 +195,4 @@ const DocumentsPage = () => {
    );
 };
 
-export default DocumentsPage;
+export default Documents;
