@@ -1,4 +1,4 @@
-import createMuiTheme, {
+import createTheme, {
   ThemeOptions
 } from "@material-ui/core/styles/createMuiTheme";
 import paletteOptions from "./palette";
@@ -11,4 +11,4 @@ const themeOptions: ThemeOptions = {
   overrides
 };
 
-export const theme = createMuiTheme(themeOptions);
+export const theme = createTheme(themeOptions);

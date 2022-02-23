@@ -26,13 +26,17 @@
     /* background-color: rgb(238, 238, 238) !important; */
   }
   
+
+  .tabulator-row.tabulator-selectable:hover {
+    background-color: #d4d4d474 !important;
+  }
+
   .tabulator-row.tabulator-selected {
     background-color: #f5763174 !important;
   }
 
-  .tabulator-row.tabulator-selectable:hover {
-    background-color: #d4d4d474 !important;
-
+  .tabulator-row.tabulator-selected:hover {
+    background-color: #d3632774 !important;
   }
 
   .tabulator-row.tabulator-group {
