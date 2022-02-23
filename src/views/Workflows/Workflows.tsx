@@ -8,7 +8,7 @@ import Details from "./Details";
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      paddingTop: theme.spacing(3),
+      // paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
     },
     results: {

@@ -5,7 +5,7 @@ import DashboardLayout from "./layouts/Dashboard";
 import { parseAddOrderUrlSearchParams } from "./views/Orders/OrderPage";
 import * as History from "history";
 import { OrderPage } from "./views/Orders";
-import { Projects, Dashboard, Subscriptions, Users, Settings, Documents, Workflows } from "./views";
+import { Projects, Dashboard, Subscriptions, Users, Settings, Documents, Workflows, Timeline } from "./views";
 import Customers from "./views/Customers/Customers";
 import CustomerDashboard from "./views/Customers/CustomerDashboard";
 import ResellerDashboard from "./views/Resellers/ResellerDashboard";
@@ -60,6 +60,11 @@ const Routes: RouteConfig[] = [
         path: projectID + "/workflows",
         exact: true,
         component: () => <Workflows/>,
+      },
+      {
+        path: projectID + "/timeline",
+        exact: true,
+        component: () => <Timeline/>,
       },
       {
         path: ordersPath,

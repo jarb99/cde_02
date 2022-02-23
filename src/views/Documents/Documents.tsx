@@ -4,7 +4,7 @@ import { TabulatorFull as Tabulator } from "tabulator-tables";
 import Grid from "@material-ui/core/Grid";
 // import Properties from "./Properties"; //
 // import Subscriptions from "./Subscriptions";
-import data from "./tempData";
+// import { fetchDocuments, updateDocument } from "../../apiFake/API";
 
 import Header from "./Header";
 import Toolbar from "./Toolbar";
@@ -25,10 +25,12 @@ const Table = () => {
    });
    useStyles();
 
+   console.log('starting data call');
+
    function createTable(): void {
       table = new Tabulator(el, {
          height: "100%",
-         data: Object.values(data),
+         data: [],
          persistenceMode: "cookie", //store persistence information in a cookie
          columns: [
             {
@@ -63,6 +65,7 @@ const Table = () => {
             },
          ],
          layout: "fitColumns",
+         groupBy: "Discipline",
          maxHeight: "100%",
          history: true,
          keybindings: {

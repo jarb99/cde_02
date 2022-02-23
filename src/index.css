@@ -30,7 +30,9 @@
     background-color: #f5763174 !important;
   }
 
-
+  .tabulator-row.tabulator-group {
+    background-color: rgb(241, 241, 241) !important;
+  }
 
 
 

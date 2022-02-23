@@ -7,3 +7,4 @@ export { default as Settings } from "./Settings";
 export { default as Projects } from "./Projects";
 export { default as Documents } from "./Documents";
 export { default as Workflows } from "./Workflows";
+export { default as Timeline } from "./Timeline";
