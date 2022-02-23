@@ -23,15 +23,21 @@
   }
   
   .tabulator-row-odd {
-    background-color: rgb(238, 238, 238) !important;
+    /* background-color: rgb(238, 238, 238) !important; */
   }
   
   .tabulator-row.tabulator-selected {
     background-color: #f5763174 !important;
   }
 
+  .tabulator-row.tabulator-selectable:hover {
+    background-color: #d4d4d474 !important;
+
+  }
+
   .tabulator-row.tabulator-group {
-    background-color: rgb(241, 241, 241) !important;
+    background-color: rgb(227, 227, 227) !important;
+
   }
 
 
