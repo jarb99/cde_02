@@ -1,50 +1,46 @@
-
 .tabulator {
-    font-size: 11px !important;
-  }
-  
-  .tabulator-cell {
-    border-right: none !important;
-  }
-  
-  .tabulator .tabulator-header {
-    color: #ffffff;
-    /* background-color: #2e2f30; */
-    font-weight: normal !important;
-  }
-  
-  .tabulator .tabulator-header {
-    color: #ffffff !important;
-  }
-  
-  .tabulator .tabulator-header .tabulator-col {
-    /* background-color: #2e2f30 !important; */
-    border-right: none !important;
-  }
-  
-  .tabulator-row-odd {
-    /* background-color: rgb(238, 238, 238) !important; */
-  }
-  
+  font-size: 11px !important;
+}
 
-  .tabulator-row.tabulator-selectable:hover {
-    background-color: #d4d4d474 !important;
-  }
+.tabulator-cell {
+  border-right: none !important;
+}
 
-  .tabulator-row.tabulator-selected {
-    background-color: #f5763174 !important;
-  }
+.tabulator .tabulator-header {
+  color: #ffffff;
+  /* background-color: #2e2f30; */
+  font-weight: normal !important;
+}
 
-  .tabulator-row.tabulator-selected:hover {
-    background-color: #d3632774 !important;
-  }
+.tabulator .tabulator-header {
+  color: #ffffff !important;
+}
 
-  .tabulator-row.tabulator-group {
+.tabulator .tabulator-header .tabulator-col {
+  /* background-color: #2e2f30 !important; */
+  border-right: none !important;
+}
+
+.tabulator-row-odd {
+  /* background-color: rgb(238, 238, 238) !important; */
+}
+
+.tabulator-row.tabulator-selected {
+  background-color: #f5763174 !important;
+}
+
+.tabulator-row.tabulator-selectable:hover {
+  background-color: #d4d4d474 !important;
+}
+
+.tabulator-row.tabulator-selected:hover {
+  background-color: #b9521a74 !important;
+}
+
+.tabulator-row.tabulator-group {
+  background-color: rgb(227, 227, 227) !important;
+}
     background-color: rgb(227, 227, 227) !important;
-
-  }
-
-
 
 .react-flow {
   border: 1px solid grey;
@@ -58,14 +54,25 @@
   border: none; */
 }
 
-.react-flow__node-default.selected, .react-flow__node-default.selected:hover {
+.react-flow__node-default.selected,
+.react-flow__node-default.selected:hover {
   box-shadow: 0 0 0 2px #1a192b;
 }
 
-.react-flow__node-input.selected, .react-flow__node-input.selected:hover {
+.react-flow__node-input.selected,
+.react-flow__node-input.selected:hover {
   box-shadow: 0 0 0 2px #0041d0;
 }
 
-.react-flow__node-output.selected, .react-flow__node-output.selected:hover {
+.react-flow__node-output.selected,
+.react-flow__node-output.selected:hover {
   box-shadow: 0 0 0 2px #ff0072;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
 }

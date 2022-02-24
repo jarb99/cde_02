@@ -14,7 +14,6 @@ import { renderRoutes } from "react-router-config";
 // TODO: find out logig behind the configuration...
 // import ConfigurationContextProvider from "./configuration/ConfigurationContextProvider";
 
-
 const history = createBrowserHistory();
 
 const useStyles = makeStyles({
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
       width: "6px"
     },
     "*::-webkit-scrollbar-thumb": {
-      backgroundColor: `${theme.palette.grey[300]}`,
+      backgroundColor: `${theme.palette.grey[300]}`
     },
     "*": {
       "scrollbar-color": `${theme.palette.grey[300]} rgba(0,0,0,0)`,
@@ -37,15 +36,15 @@ const App: React.FC = () => {
 
   return (
     // <ConfigurationContextProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Router history={history}>
-            {/* TODO: ScrollReset */}
-            {renderRoutes(routes)}
-          </Router>
-        </MuiPickersUtilsProvider>
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Router history={history}>
+          {/* TODO: ScrollReset */}
+          {renderRoutes(routes)}
+        </Router>
+      </MuiPickersUtilsProvider>
+    </ThemeProvider>
     // </ConfigurationContextProvider>
   );
 };

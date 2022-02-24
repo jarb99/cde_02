@@ -25,6 +25,7 @@
     "formik": "^2.1.5",
     "formik-material-ui": "^2.0.1",
     "history": "^4.10.1",
+    "immer": "9.0.12",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
     "oidc-client": "^1.10.1",
