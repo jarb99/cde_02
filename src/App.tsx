@@ -22,7 +22,7 @@ const useStyles = makeStyles({
       width: "6px"
     },
     "*::-webkit-scrollbar-thumb": {
-      backgroundColor: `${theme.palette.grey[300]}`,
+      backgroundColor: `${theme.palette.grey[300]}`
     },
     "*": {
       "scrollbar-color": `${theme.palette.grey[300]} rgba(0,0,0,0)`,
