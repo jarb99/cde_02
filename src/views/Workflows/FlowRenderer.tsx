@@ -6,8 +6,10 @@ import ReactFlow, {
    ReactFlowProvider,
    addEdge,
    MiniMap,
+   ConnectionLineType,
    Controls,
-   updateEdge
+   updateEdge,
+   SmoothStepEdge,
 } from "react-flow-renderer";
 
 const onChange = () => {
@@ -86,7 +88,7 @@ const initialElements: any =
          targetPosition: "left"
       },
       // animated edge
-      { id: "e1-1b", source: "1", target: "1b", type: "smoothstep" },
+      { id: "e1-1b", source: "1", target: "1b", type: "smoothstep", animated: "true" },
       { id: "e1b-2", source: "1b", target: "2", type: "smoothstep" },
       { id: "e2-3", source: "2", target: "3", type: "smoothstep" },
       { id: "e2-4", source: "2", target: "4", type: "smoothstep" },
@@ -149,6 +151,8 @@ const FlowRenderer = (props: Props) => {
                onEdgeUpdate={onEdgeUpdate}
                snapToGrid
                snapGrid={[10, 10]}
+               connectionLineType={ConnectionLineType.SmoothStep}
+               edgeTypes={{default: SmoothStepEdge}}
             >
                <Controls />
             </ReactFlow>

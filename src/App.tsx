@@ -12,8 +12,7 @@ import routes from "./Routes";
 import { renderRoutes } from "react-router-config";
 
 // TODO: find out logig behind the configuration...
-// import ConfigurationContextProvider from "./configuration/ConfigurationContextProvider";
-
+import ConfigurationContextProvider from "./configuration/ConfigurationContextProvider";
 
 const history = createBrowserHistory();
 
@@ -36,7 +35,7 @@ const App: React.FC = () => {
   useStyles();
 
   return (
-    // <ConfigurationContextProvider>
+    <ConfigurationContextProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -46,7 +45,7 @@ const App: React.FC = () => {
           </Router>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
-    // </ConfigurationContextProvider>
+    </ConfigurationContextProvider>
   );
 };
 
