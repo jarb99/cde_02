@@ -1,6 +1,6 @@
 import createTheme, {
   ThemeOptions
-} from "@material-ui/core/styles/createTheme";
+} from "@material-ui/core/styles/createMuiTheme";
 import paletteOptions from "./palette";
 import createTypographyOptions from "./typography";
 import overrides from "./overrides";

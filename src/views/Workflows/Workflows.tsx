@@ -3,6 +3,8 @@ import ProjectNavBar from "../../layouts/Dashboard/ProjectNavBar";
 import { Box, Button, Container, createStyles, makeStyles, TableCell, Theme, Typography, Card, CardContent } from "@material-ui/core";
 import Page from "../../components/Page";
 import Details from "./Details";
+import Workflow from './Workflow';
+import useApiFetch from "../../api/ApiFetch";
 
 
 const styles = (theme: Theme) =>
@@ -52,6 +54,9 @@ const Workflows = (props: Props) => {
             >
                <Container maxWidth={false}>
                   <Details />
+
+                  {/* NEW APPROACH... */}
+                  <Workflow workflowId={1} />
                </Container>
             </Box>
          </Box>

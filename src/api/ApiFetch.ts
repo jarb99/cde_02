@@ -131,6 +131,7 @@ const useApiFetch = <TData>(
     dispatch(fetching());
 
     const fetchData = () => {
+
       fetch(tokenSource.token).then(response => {
         if (active) {
           dispatch(fetched(response.data));

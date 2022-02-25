@@ -12,7 +12,7 @@ const doUpdateStatus = (cell: any, status: string) => {
   });
 };
 
-const cellContextMenu = (cell: any, e: Event) => {
+const cellContextMenu: any = (cell: any, e: Event) => {
   let menu = [];
   console.log(cell);
   if (cell.getValue().toLowerCase().includes("review")) {
@@ -88,10 +88,10 @@ const Table = () => {
           field: "status",
           contextMenu: cellContextMenu,
           formatter: (cell, formatterParams, onRendered) => {
-            let val = cell.getValue();
+            let val: string  = cell.getValue();
             const color = getColor(val);
             return val
-              ? `<span class="dot" style="background-color: ${color}"></span>${statusType[val]}`
+              ? `<span class="dot" style="background-color: ${color}"></span>${statusType[val as keyof typeof statusType]}`
               : "";
           }
         }
@@ -119,6 +119,7 @@ const Table = () => {
     if (el) {
       fetchDocuments().then((result) => {
         if (result.status === 200) {
+          console.log(result);
           createTable(result.documents);
         } else {
           console.log("load table data error: ", result);

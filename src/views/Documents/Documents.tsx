@@ -11,34 +11,34 @@ import Toolbar from "./Toolbar";
 import ProjectNavBar from "../../layouts/Dashboard/ProjectNavBar";
 
 
-enum actionKind {
-   SETDATA = "SETDATA",
-   SETCOLUMNS = "SETCOLUMNS",
-}
+// enum actionKind {
+//    SETDATA = "SETDATA",
+//    SETCOLUMNS = "SETCOLUMNS",
+// }
 
-interface actionInterface {
-   type: actionKind;
-   payload: any;
-}
+// interface actionInterface {
+//    type: actionKind;
+//    payload: any;
+// }
 
-interface stateInterface {
-   data: Array<object>;
-   columns: Array<object>;
-}
+// interface stateInterface {
+//    data: Array<object>;
+//    columns: Array<object>;
+// }
 
-const documentsReducer = (
-   state: stateInterface,
-   action: actionInterface
-): stateInterface => {
-   const { type, payload } = action;
-   switch (type) {
-      case actionKind.SETDATA:
-         return { ...state, data: payload };
-      case actionKind.SETCOLUMNS:
-         return { ...state, columns: payload };
-   }
-   console.log("reducer output: ", type, payload);
-};
+// const documentsReducer = (
+//    state: stateInterface,
+//    action: actionInterface
+// ): stateInterface => {
+//    const { type, payload } = action;
+//    switch (type) {
+//       case actionKind.SETDATA:
+//          return { ...state, data: payload };
+//       case actionKind.SETCOLUMNS:
+//          return { ...state, columns: payload };
+//    }
+//    console.log("reducer output: ", type, payload);
+// };
 
 const Documents = () => {
    //   const [state, dispatch] = useReducer(documentsReducer, {

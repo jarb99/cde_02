@@ -98,9 +98,8 @@ const initialElements: any =
       { id: "e2-8", source: "6", target: "7", type: "smoothstep" }
    ];
 
-interface Props { }
-
-const FlowRenderer = (props: Props) => {
+   
+const FlowRenderer = (props: any) => {
    const [rfInstance, setRfInstance] = useState<any>(null);
    const [elements, setElements] = useState(initialElements);
 
