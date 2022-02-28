@@ -28,11 +28,28 @@ mock.onGet("/documents").reply(200, {
 // }
 // );
 
-const workflow_1: IWorkflow = {
-  id: 1,
-  contents: 'such empty'
-}
-mock.onGet("/api/workflows/1/latest").reply(200, workflow_1);
+mock.onGet("/api/workflows/1/latest").reply((config) => {
+  let workflowId: number = Number(config.url?.split('/')[2]);
+  const storedFlow = window.localStorage.getItem(`workflow_${workflowId}`);
+  const wf: IWorkflow = {
+    id: workflowId,
+    flow: storedFlow
+  }
+  // console.log('stored flow mock get', storedFlow);
+  storedFlow && console.log('storedElements', JSON.parse(storedFlow));
+  return [200, wf]
+});
+
+mock.onPost("/api/workflows/1/latest").reply((config) => {
+  // console.log('mock caught post: ', config);
+  const workflowId = JSON.parse(config.data).workflowId;
+  const flow = JSON.parse(config.data).flow;
+  window.localStorage.setItem(`workflow_${workflowId}`, flow);
+  return [200, { status: 'empty' }];
+});
+
+
+
 
 
 mock.onPost("/updateDocument").reply((config) => {

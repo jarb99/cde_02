@@ -2,7 +2,7 @@
 
 interface IWorkflow {
     id: number,
-    contents: any
+    flow: any
 }
 
 export default IWorkflow

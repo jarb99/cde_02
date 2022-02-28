@@ -7,7 +7,6 @@ import {
   CardContent,
   Typography
 } from "@material-ui/core";
-import FlowRenderer from './FlowRenderer';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -46,12 +45,7 @@ const Details: React.FC = () => {
       <>
         <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-            <div className={classes.content}>
-            <Typography align="left" component="h4" variant="h4" >
-                Example Workflow #1
-            </Typography>
-            <FlowRenderer />
-            </div>
+          
         </CardContent>
         </Card>
     </>

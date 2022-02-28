@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { Box, Button, Container, createStyles, makeStyles, TableCell, Theme } from "@material-ui/core";
+import React, { useState, useCallback, useReducer } from "react";
+import { Box, Button, Grid, TextField } from "@material-ui/core";
 
 import ReactFlow, {
    removeElements,
@@ -12,122 +12,154 @@ import ReactFlow, {
    SmoothStepEdge,
 } from "react-flow-renderer";
 
-const onChange = () => {
-   console.log("did change");
+enum ActionType {
+   SETRF = "SETRF",
+   CLICKNODE = "CLICKNODE",
+   CLICKPANE = "CLICKPANE",
+   CLEARLABEL = "CLEARLABEL",
+   SETELEMENTS = "SETELEMENTS",
+   NODELABELCHANGE = "NODELABELCHANGE"
+}
+
+interface Action {
+   type: ActionType;
+   payload: any;
+}
+
+interface State {
+   rfInstance: any;
+   elements: any[];
+   labelValue: string;
+   clickedNodeId: string;
+}
+
+const reducer = (
+   state: State,
+   action: Action
+): State => {
+   const { type, payload } = action;
+   switch (type) {
+      case ActionType.SETRF:
+         return { 
+            ...state, 
+            rfInstance: payload 
+         };
+      case ActionType.CLICKNODE:
+         return { 
+            ...state, 
+            labelValue: payload.label,
+            clickedNodeId: payload.id 
+         };
+      case ActionType.CLICKPANE:
+         return { 
+            ...state, 
+            labelValue: '',
+            clickedNodeId: '',
+         };
+      case ActionType.NODELABELCHANGE:
+         return { 
+            ...state, 
+            labelValue: payload.label,
+            elements: payload.elements
+         };
+      case ActionType.SETELEMENTS:
+         return { 
+            ...state, 
+            elements: payload 
+         };
+      default:
+         return state;
+   }
 };
 
-const initialElements: any =
-   [
-      {
-         id: "1",
-         type: "input", // input node
-         data: { label: "ISSUE" },
-         position: { x: 0, y: 150 },
-         sourcePosition: "right",
-         style: { width: "auto" }
-      },
-      {
-         id: "1b",
-         // you can also pass a React component as a label
-         data: { label: <div>TEAM REVIEW</div> },
-         position: { x: 70, y: 150 },
-         style: { width: "auto" },
-         sourcePosition: "right",
-         targetPosition: "left"
-      },
-      {
-         id: "2",
-         // you can also pass a React component as a label
-         data: { label: <div>LEAD REVIEW</div> },
-         position: { x: 200, y: 150 },
-         style: { width: "auto" },
-         sourcePosition: "right",
-         targetPosition: "left"
-      },
-      {
-         id: "3",
-         type: "default", // output node
-         data: { label: "STATUS A" },
-         position: { x: 350, y: 90 },
-         style: { width: "auto" },
-         sourcePosition: "right",
-         targetPosition: "left"
-      },
-      {
-         id: "4",
-         type: "default", // output node
-         data: { label: "STATUS B" },
-         position: { x: 350, y: 150 },
-         style: { width: "auto" },
-         sourcePosition: "right",
-         targetPosition: "left"
-      },
-      {
-         id: "5",
-         type: "output", // output node
-         data: { label: "STATUS C" },
-         position: { x: 350, y: 210 },
-         style: { width: "auto" },
-         targetPosition: "left"
-      },
-      {
-         id: "6",
-         type: "default", // output node
-         data: { label: "CLIENT REVIEW" },
-         position: { x: 460, y: 120 },
-         style: { width: "auto" },
-         sourcePosition: "right",
-         targetPosition: "left"
-      },
-      {
-         id: "7",
-         type: "output", // output node
-         data: { label: "FIN" },
-         position: { x: 580, y: 120 },
-         style: { width: "auto" },
-         targetPosition: "left"
-      },
-      // animated edge
-      { id: "e1-1b", source: "1", target: "1b", type: "smoothstep", animated: "true" },
-      { id: "e1b-2", source: "1b", target: "2", type: "smoothstep" },
-      { id: "e2-3", source: "2", target: "3", type: "smoothstep" },
-      { id: "e2-4", source: "2", target: "4", type: "smoothstep" },
-      { id: "e2-5", source: "2", target: "5", type: "smoothstep" },
-      { id: "e2-6", source: "3", target: "6", type: "smoothstep" },
-      { id: "e2-7", source: "4", target: "6", type: "smoothstep" },
-      { id: "e2-8", source: "6", target: "7", type: "smoothstep" }
-   ];
+interface Props {
+   flow: any;
+   workflowId: string;
+   handleSave: (flow: any) => void;
+}
 
-   
-const FlowRenderer = (props: any) => {
-   const [rfInstance, setRfInstance] = useState<any>(null);
-   const [elements, setElements] = useState(initialElements);
+const getInitialState = (props: Props): State => {
+   return {
+      rfInstance: null,
+      elements: props.flow.elements,
+      labelValue: '',
+      clickedNodeId: '',
+   }
+}
+
+const FlowRenderer = (props: Props) => {
+
+   const [state, dispatch] = useReducer(reducer, getInitialState(props));
+   const { rfInstance, elements, labelValue, clickedNodeId } = state;
 
    const getNodeId = () => `randomnode_${+new Date()}`;
 
+   const handleNodeNameChange = (e: any) => {
+      const label = e.target.value;
+      const updateElementLabel = () => {
+         console.log('clickedNodeId', clickedNodeId);
+         if (clickedNodeId.length) {
+            return elements.map((el: any) => {
+               if (el.id === clickedNodeId) {
+                  el.data = {
+                     ...el.data,
+                     label: label,
+                  };
+               }
+               return el;
+            })
+         } 
+      }
+      dispatch({type: ActionType.NODELABELCHANGE, payload: { 
+         label: label, 
+         elements: updateElementLabel() 
+      }})
+   }
+
    const onLoad = (reactFlowInstance: any) => {
-      setRfInstance(reactFlowInstance);
-      console.log(typeof reactFlowInstance);
+      dispatch({type: ActionType.SETRF, payload: reactFlowInstance});
       reactFlowInstance.fitView();
    };
-   const onElementsRemove = (elementsToRemove: any) =>
-      setElements((els: any) => removeElements(elementsToRemove, els));
-   const onEdgeUpdate = (oldEdge: any, newConnection: any) =>
-      setElements((els: any) => updateEdge(oldEdge, newConnection, els));
-   const onConnect = (params: any) => setElements((els: any) => addEdge(params, els));
+
+   const onElementsRemove = (elementsToRemove: any) => dispatch({ 
+      type: ActionType.SETELEMENTS,
+      payload: removeElements(elementsToRemove, elements)
+   });
+
+   const onEdgeUpdate = (oldEdge: any, newConnection: any) =>  {
+      console.log('');
+      dispatch({ 
+         type: ActionType.SETELEMENTS,
+         payload: updateEdge(oldEdge, newConnection, elements)
+      })
+   };
+
+   const onConnect = (params: any) => dispatch({ 
+      type: ActionType.SETELEMENTS,
+      payload: addEdge(params, elements)
+   })
 
    const onSave = useCallback(() => {
-      console.log("did click");
       if (rfInstance) {
          const flow = rfInstance?.toObject()!;
+         props.handleSave(flow)
          console.log(flow);
       }
    }, [rfInstance]);
+
+   const onElementClick = (event: any, element: any) => {
+      element.data && dispatch({ type: ActionType.CLICKNODE, payload: { label: element.data.label, id: element.id }})
+   }
+
+   const onPaneClick = (event: any) => {
+      dispatch({ type: ActionType.CLICKPANE, payload: {} })
+   }
 
    const onAdd = useCallback(() => {
       const newNode = {
          id: getNodeId(),
          data: { label: "Added node" },
+         style: { width: "auto" },
          sourcePosition: "right",
          targetPosition: "left",
          position: {
@@ -135,14 +167,22 @@ const FlowRenderer = (props: any) => {
             y: 80
          }
       };
-      setElements((els: object[]) => els.concat(newNode));
-   }, [setElements]);
+      dispatch({ 
+         type: ActionType.SETELEMENTS,
+         // payload: ((els: object[]) => els.concat(newNode))
+         payload: [newNode].concat(elements)
+      })
+   }, []);
+
+   // console.log('elements', elements);
 
    return (
       <div style={{ height: 450 }}>
          <ReactFlowProvider>
             <ReactFlow
                elements={elements}
+               onElementClick={onElementClick}
+               onPaneClick={onPaneClick}
                onLoad={onLoad}
                onElementsRemove={onElementsRemove}
                onConnect={onConnect}
@@ -154,9 +194,29 @@ const FlowRenderer = (props: any) => {
                edgeTypes={{default: SmoothStepEdge}}
             >
                <Controls />
+               
             </ReactFlow>
          </ReactFlowProvider>
-         <Button onClick={onAdd}>add node</Button>
+
+         <Grid
+         container
+         direction="row"
+         justify="space-between"
+         alignItems="center"
+         >
+            <Grid item xs>
+               <Button onClick={onAdd}>add node</Button>
+               <Button onClick={onSave}>save workflow</Button>
+            </Grid>
+            <Grid item xs>
+               <TextField 
+               value={labelValue} 
+               variant="standard" 
+               disabled={!(clickedNodeId.length > 0)}
+               onChange={handleNodeNameChange}
+               />
+            </Grid>
+         </Grid>
       </div>
    );
 };

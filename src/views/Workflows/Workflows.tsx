@@ -13,6 +13,22 @@ const styles = (theme: Theme) =>
       // paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
     },
+    card: {
+      margin: theme.spacing(2, 0)
+    },
+    cardContent: {
+      padding: theme.spacing(6),
+      marginBottom: "30px"
+    },
+    content: {
+      width: theme.breakpoints.values.md,
+      maxWidth: "400px",
+      margin: "10 auto",
+      padding: theme.spacing(6),
+      [theme.breakpoints.up("md")]: {
+        padding: theme.spacing(6)
+      }
+    },
     results: {
       marginTop: theme.spacing(3),
     },
@@ -52,11 +68,19 @@ const Workflows = (props: Props) => {
                   width: "100%",
                }}
             >
-               <Container maxWidth={false}>
-                  <Details />
+               <Container maxWidth={"md"}>
 
+                  <Card className={classes.card}>
+                     <CardContent className={classes.cardContent}>
+                        <Workflow workflowId={'1'} />
+                     </CardContent>
+                  </Card>
+                  <Card className={classes.card}>
+                     <CardContent className={classes.cardContent}>
+                        <Workflow workflowId={'2'} />
+                     </CardContent>
+                  </Card>
                   {/* NEW APPROACH... */}
-                  <Workflow workflowId={1} />
                </Container>
             </Box>
          </Box>
