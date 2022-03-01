@@ -1,4 +1,4 @@
-interface Idocuments {
+interface Document {
     id: string;
     Discipline: string;
     num: string;
@@ -10,5 +10,5 @@ interface Idocuments {
     status?: string;
   }
   
-  export default Idocuments;
+  export default Document;
   

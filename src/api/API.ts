@@ -1,9 +1,12 @@
 import axios, { AxiosResponse, CancelToken } from "axios";
 import Configuration from "../configuration/configuration";
 import dateValueResponseTransform from "./transforms/DateValueResponseTransform";
-import IWorkflow from "../models/Workflow";
 import "./mockDB"; // MOCK DATABASE
+
+import IWorkflow from "../models/Workflow";
 import SaveWorkflow from "../models/SaveWorkflow";
+import SaveDocument from "../models/SaveDocument";
+import Document from "../models/Document";
 
 const api = axios.create({
   baseURL: "/api/",
@@ -11,9 +14,14 @@ const api = axios.create({
   transformResponse: dateValueResponseTransform
 });
 
-export async function getConfiguration(cancelToken?: CancelToken): Promise<AxiosResponse<Configuration>> {
-  console.log('get configuration');
-  return api.get<Configuration>('configuration', {cancelToken});
+
+
+
+export async function getConfiguration(
+  cancelToken?: CancelToken
+): Promise<AxiosResponse<Configuration>> {
+  // console.log("get configuration");
+  return api.get<Configuration>("configuration", { cancelToken });
 }
 
 export class PagingParams {
@@ -50,12 +58,9 @@ async function getPage<T>(
     [PagingParams.PAGE_NO]: pageNo,
     [PagingParams.PAGE_SIZE]: pageSize
   };
-  const response = await api.get<Array<T>>(url, {params, cancelToken});
+  const response = await api.get<Array<T>>(url, { params, cancelToken });
   return getPageResults(response);
 }
-
-
-
 
 // export function getWorkflows(
 //   workflowId: number,
@@ -66,60 +71,43 @@ async function getPage<T>(
 //   return getPage(`/workflows/${workflowId}`, pageNo, pageSize, cancelToken);
 // }
 
-export function getWorkflowLatest(workflowId: string, cancelToken?: CancelToken): Promise<AxiosResponse<IWorkflow>> {
-  console.log('doing workflow api call, ID:', workflowId);
-  return api.get<IWorkflow>(`/workflows/${workflowId}/latest`, {cancelToken});
+export function getWorkflowLatest(
+  workflowId: string,
+  cancelToken?: CancelToken
+): Promise<AxiosResponse<IWorkflow>> {
+  console.log("doing workflow api call, ID:", workflowId);
+  return api.get<IWorkflow>(`/workflows/latest/${workflowId}`, { cancelToken });
 }
 
-export function saveWorkflow(payload: SaveWorkflow, cancelToken?: CancelToken): Promise<AxiosResponse> {
-  const {workflowId, flow} = payload;
-  return api.post(`workflows/${workflowId}/latest`, {
-    workflowId: workflowId,
-    flow: JSON.stringify(flow)
-  }, {cancelToken});
+export function saveWorkflow(
+  payload: SaveWorkflow,
+  cancelToken?: CancelToken
+): Promise<AxiosResponse> {
+  const { workflowId, flow } = payload;
+  return api.post(
+    `workflows/save`,
+    {
+      workflowId: workflowId,
+      flow: JSON.stringify(flow)
+    },
+    { cancelToken }
+  );
 }
 
+export function getAllDocuments(
+  getAll: boolean,
+  cancelToken?: CancelToken
+): Promise<AxiosResponse<Document[]>> {
+  return api.get<Document[]>(`/documents`, { cancelToken });
+}
 
-
-
-
-
-
-
-
-
-export const fetchDocuments = async (): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    axios
-      .get("/documents", {})
-      .then(function (response) {
-        resolve({
-          status: response.status,
-          documents: response.data.docs
-        });
-      })
-      .catch(function (error) {
-        reject(error);
-      });
-  });
-};
-
-export const updateDocument = async (
-  id: string,
-  payload: object
-): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    axios
-      .post("/updateDocument", {
-        id: id,
-        payload: payload
-      })
-      .then(function (response) {
-        resolve(response.data.row);
-      })
-      .catch(function (error) {
-        reject(error);
-      });
-  });
-};
+export function updateDocument<TData>(
+  payload: SaveDocument<TData>,
+  cancelToken?: CancelToken
+): Promise<AxiosResponse> {
+  console.log();
+  return api.post(
+    `/updateDocument`, payload, { cancelToken }
+  );
+}
 

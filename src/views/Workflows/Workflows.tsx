@@ -4,7 +4,7 @@ import { Box, Button, Container, createStyles, makeStyles, TableCell, Theme, Typ
 import Page from "../../components/Page";
 import Details from "./Details";
 import Workflow from './Workflow';
-import useApiFetch from "../../api/ApiFetch";
+import { useApiFetch } from "../../api/ApiFetch";
 
 
 const styles = (theme: Theme) =>

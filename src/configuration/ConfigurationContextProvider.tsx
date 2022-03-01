@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import Configuration from "./configuration";
-import useApiFetch from "../api/ApiFetch";
+import { useApiFetch } from "../api/ApiFetch";
 import { getConfiguration } from "../api/API";
 
 const ConfigurationContext = React.createContext<Configuration | null>(null);

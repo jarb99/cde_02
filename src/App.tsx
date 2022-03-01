@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, createContext } from "react";
 
 import { theme } from "./theme";
 import { CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
@@ -11,10 +11,15 @@ import { Router } from "react-router-dom";
 import routes from "./Routes";
 import { renderRoutes } from "react-router-config";
 
+import { globalReducer, initialState } from "./api/globalReducer";
+
 // TODO: find out logig behind the configuration...
 import ConfigurationContextProvider from "./configuration/ConfigurationContextProvider";
 
 const history = createBrowserHistory();
+
+const StateContext = createContext<any>(null);
+const DispatchContext = createContext<any>(null);
 
 const useStyles = makeStyles({
   "@global": {
@@ -34,19 +39,26 @@ const useStyles = makeStyles({
 const App: React.FC = () => {
   useStyles();
 
+  const [state, dispatch] = useReducer(globalReducer, initialState);
+
   return (
     <ConfigurationContextProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Router history={history}>
-            {/* TODO: ScrollReset */}
-            {renderRoutes(routes)}
-          </Router>
-        </MuiPickersUtilsProvider>
-      </ThemeProvider>
+      <DispatchContext.Provider value={{ dispatch }}>
+        <StateContext.Provider value={{ state }}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <Router history={history}>
+                {/* TODO: ScrollReset */}
+                {renderRoutes(routes)}
+              </Router>
+            </MuiPickersUtilsProvider>
+          </ThemeProvider>
+        </StateContext.Provider>
+      </DispatchContext.Provider>
     </ConfigurationContextProvider>
   );
 };
 
+export { DispatchContext, StateContext };
 export default App;

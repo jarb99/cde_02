@@ -210,4 +210,22 @@ const useApiSend = <TPayload, TResponse extends any>(
   return [state as State<TPayload, TResponse>, execute, cancel];
 }
 
-export default useApiSend;
+
+function apiSend<TPayload, TResponse extends any>(
+    axiosRequest: (cancelToken?: CancelToken) => Promise<AxiosResponse<TResponse>>
+  ): Promise<{status: number, data: TPayload}>{
+    return new Promise<any>((resolve, reject) => {
+        axiosRequest().then((response) => {
+            resolve({
+                status: response.status,
+                data: response.data
+            });
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+  };
+  
+
+export { useApiSend, apiSend };
