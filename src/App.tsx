@@ -11,14 +11,14 @@ import { Router } from "react-router-dom";
 import routes from "./Routes";
 import { renderRoutes } from "react-router-config";
 
-import { globalReducer, initialState } from "./api/globalReducer";
+import { globalReducer, initialState, State } from "./api/globalReducer";
 
 // TODO: find out logig behind the configuration...
 import ConfigurationContextProvider from "./configuration/ConfigurationContextProvider";
 
 const history = createBrowserHistory();
 
-const StateContext = createContext<any>(null);
+const StateContext = createContext<{state: State}>({state: initialState});
 const DispatchContext = createContext<any>(null);
 
 const useStyles = makeStyles({
