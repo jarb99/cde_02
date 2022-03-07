@@ -90,6 +90,8 @@ const FlowRenderer = (props: Props) => {
 
   const getNodeId = () => `randomnode_${+new Date()}`;
 
+  console.log(elements);
+
   const handleNodeNameChange = (e: any) => {
     const label = e.target.value;
     const updateElementLabel = () => {
@@ -160,7 +162,7 @@ const FlowRenderer = (props: Props) => {
     dispatch({ type: ActionType.clickPane, payload: {} });
   };
 
-  const onAdd = useCallback(() => {
+  const onAdd = () => {
     const newNode = {
       id: getNodeId(),
       data: { label: "Added node" },
@@ -172,15 +174,19 @@ const FlowRenderer = (props: Props) => {
         y: 80
       }
     };
+
+    console.log(elements);
+    console.log(newNode);
+    
     dispatch({
       type: ActionType.setElements,
       // payload: ((els: object[]) => els.concat(newNode))
       payload: [newNode].concat(elements)
     });
-  }, []);
+  };
 
-  // console.log('elements', elements);
-
+  console.log();
+  
   return (
     <div style={{ height: 450 }}>
       <ReactFlowProvider>

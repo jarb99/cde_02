@@ -9,6 +9,7 @@ import { Button } from "@material-ui/core";
 
 interface WorkflowProps {
   workflowId: string;
+  title: string;
 }
 
 const initialElements: any = [
@@ -99,7 +100,7 @@ const initialElements: any = [
 ];
 
 const Workflow: React.FC<WorkflowProps> = (props: WorkflowProps) => {
-  const { workflowId } = props;
+  const { workflowId, title } = props;
   const fetchWorkflow = useCallback(
     (cancelToken?: CancelToken) => getWorkflowLatest(workflowId, cancelToken),
     [workflowId]
@@ -130,11 +131,14 @@ const Workflow: React.FC<WorkflowProps> = (props: WorkflowProps) => {
   return (
     <>
       {fetchedFlow && (
-        <FlowRenderer
-          workflowId={workflowId}
-          flow={fetchedFlow ?? []}
-          handleSave={handleSave}
-        />
+        <>
+          <h2>{title}</h2>
+          <FlowRenderer
+            workflowId={workflowId}
+            flow={fetchedFlow ?? []}
+            handleSave={handleSave}
+          />
+        </>
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useCallback } from "react";
 import { Box, makeStyles, useTheme } from "@material-ui/core";
 import { StateContext } from "../../App";
-import TableFunctions from "./TableFunctions";
+import TableFunctions from "./TabulatorTable";
 
 const Table = () => {
   console.log("TABLE.tsx RENDER");
@@ -38,7 +38,7 @@ const Table = () => {
             maxWidth: "100%"
           }}
         >
-          <TableFunctions data={state.documents} />
+          <TableFunctions />
         </div>
       </Box>
     </>

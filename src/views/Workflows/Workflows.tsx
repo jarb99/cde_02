@@ -72,12 +72,17 @@ const Workflows = (props: Props) => {
 
                   <Card className={classes.card}>
                      <CardContent className={classes.cardContent}>
-                        <Workflow workflowId={'1'} />
+                        <Workflow workflowId={'1'} title={'Default workflow'}/>
                      </CardContent>
                   </Card>
                   <Card className={classes.card}>
                      <CardContent className={classes.cardContent}>
-                        <Workflow workflowId={'2'} />
+                        <Workflow workflowId={'2'} title={'Default with technical review'}/>
+                     </CardContent>
+                  </Card>
+                  <Card className={classes.card}>
+                     <CardContent className={classes.cardContent}>
+                        <Workflow workflowId={'3'} title={'Complex workflow'}/>
                      </CardContent>
                   </Card>
                   {/* NEW APPROACH... */}

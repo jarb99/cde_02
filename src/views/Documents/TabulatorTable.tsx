@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { DispatchContext, StateContext } from '../../App';
 import { ActionType } from '../../api/globalReducer';
 import { TabulatorFull as Tabulator } from "tabulator-tables";
@@ -10,30 +10,35 @@ import Document from "../../models/Document";
 let table: any = undefined;
 
 interface Props {
-   data: Document[],
 }
 
-const TableFunctions = (props: Props) => {
+const TabulatorTable = (props: Props) => {
 
    let el: any = React.createRef();
-   const { data } = props;
-   const { dispatch } = useContext(DispatchContext)
-   const { state } = useContext(StateContext)
+   const { dispatch } = useContext(DispatchContext);
+   const { state } = useContext(StateContext);
+   const [built, setBuilt] = useState(false);
 
-   
-   useEffect(() => {
-      if (el && data.length !== 0 && table === undefined) createTable(data, el);
-   }, [el, data])
+
 
    useEffect(() => {
-      return  () => { table = undefined; }
+      if (el && state.documents.length !== 0 && table === undefined) createTable(el);
+   }, [el, state.documents])
+
+   useEffect(() => {
+      return  () => { 
+         console.log('CLEARING TABULATOR TABLE');
+         table = undefined; 
+      }
    }, [])
 
    useEffect(() => {
-      console.log('detected change to state.documents', state.documents);
-      let docs = state.documents.map(r => { return {...r}})
-      console.log('docs', docs)
-      table && table.setData(docs)
+      if (built) {
+         console.log('detected change to state.documents, table:', table);
+         let docs = state.documents.map(r => { return {...r}});
+         console.log('docs', docs);
+         table && table.setData(docs);
+      }
    }, [state.documents])
 
    const doUpdateStatus = (cell: any, status: string) => {
@@ -86,12 +91,12 @@ const TableFunctions = (props: Props) => {
       return color;
    };
 
-   function createTable(data: any, el: any): void {
+   function createTable( el: any): void {
       console.log("TABLE BEING INITIALISED", table);
       table = new Tabulator(el, {
          height: "100%",
          data: state.documents,
-         reactiveData: true,
+         // reactiveData: true,
          groupToggleElement: "header",
          persistenceMode: "cookie", //store persistence information in a cookie
          columns: [
@@ -132,10 +137,13 @@ const TableFunctions = (props: Props) => {
          },
          movableColumns: true
       });
+      table.on("tableBuilt", () => { setBuilt(true) });
    }
+
+   console.log('TabulatorTable.tsx RENDER');
 
    return <div ref={(refEl) => (el = refEl)} />;
 }
 
 export { table };
-export default TableFunctions;
+export default TabulatorTable;
