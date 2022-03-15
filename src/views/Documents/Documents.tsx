@@ -1,17 +1,43 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useReducer,
+  createContext,
+} from "react";
 import { Box, Container, makeStyles, useTheme } from "@material-ui/core";
 import { getAllDocuments } from "../../api/API";
-import Table from "./Table";
 import { CancelToken } from "axios";
 import { apiFetch } from "../../api/ApiFetch";
 import Toolbar from "./Toolbar";
 import ProjectNavBar from "../../layouts/Dashboard/ProjectNavBar";
 import Document from "../../models/Document";
-import { DispatchContext } from "../../App";
-import { ActionType } from "../../api/globalReducer";
+import TabulatorTable from "./TabulatorTable";
+import Sidebar from "./Sidebar";
+
+import {
+  reducer,
+  initialState,
+  State,
+  ActionType,
+  SidebarVisibility,
+} from "./documentsReducer";
+
+const StateContext = createContext<{ state: State }>({ state: initialState });
+const DispatchContext = createContext<any>(null);
 
 const Documents = () => {
-  const { dispatch } = useContext(DispatchContext);
+  const theme = useTheme();
+  const [state, dispatch] = useReducer(reducer, initialState); //useContext(DispatchContext);
+
+  const useStyles = makeStyles({
+    "@global": {
+      "*.tabulator-col,.tabulator-headers": {
+        backgroundColor: `${theme.palette.grey[700]} !important`,
+      },
+    },
+  });
+  useStyles();
 
   // GET DATA AND UPDATE GLOBAL STATE
   const getAll: boolean = true;
@@ -19,13 +45,14 @@ const Documents = () => {
     (cancelToken?: CancelToken) => getAllDocuments(getAll, cancelToken),
     [getAll]
   );
+
   useEffect(() => {
-   apiFetch(fetchDocuments).then(
+    apiFetch(fetchDocuments).then(
       (result: Partial<{ status: number; data: Document[] }>) => {
         if (result.status === 200) {
           dispatch({
             type: ActionType.loadAllDocuments,
-            payload: result.data
+            payload: result.data,
           });
         } else {
           console.log("load table data error: ", result);
@@ -34,61 +61,81 @@ const Documents = () => {
     );
   }, []);
 
+  const handleUpdateDocument = (obj: any) => {
+    // TODO: update database
+    dispatch(obj);
+  };
+
   const [tab, setTab] = useState(1);
 
   const handleTabChange = (event: React.SyntheticEvent, value: number) => {
     setTab(value);
   };
 
-  return (
-    <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        style={{
-          width: "100%",
-          height: "calc(100% - 15px)"
-          // padding: "10px",
-        }}
-      >
-        {/* <Header title="16008: JUBILIE PLACE"/> */}
-        <ProjectNavBar
-          title={"DOCUMENTS"}
-          handleTabChange={handleTabChange}
-          tabValue={tab}
-        />
-        <Toolbar />
+  const content = () => {
+    return (
+      <>
         <Box
           display="flex"
-          flexDirection="row"
-          style={{
-            height: "400px",
-            flexGrow: 1,
-            width: "100%",
-            maxWidth: "100%"
-          }}
+          flexDirection="column"
+          style={{ width: "100%", height: "calc(100% - 15px)" }} //TODO: fix vertical flex
         >
-          <Box>{/* <Subscriptions /> */}</Box>
+          <ProjectNavBar
+            title={"DOCUMENTS"}
+            handleTabChange={handleTabChange}
+            tabValue={tab}
+          />
+          <Toolbar />
           <Box
+            display="flex"
+            flexDirection="row"
+            flexGrow={1}
             style={{
-              flexGrow: 1,
-              maxHeight: "100%",
-              width: "500px",
-              height: "100%"
-              // marginLeft: "10px",
-              // marginRight: "10px",
+              height: "400px",
+              width: "100%",
+              maxWidth: "100%",
+              borderTop: "2px solid lightGrey",
             }}
-            // className="panelBorder"
           >
-            <Box style={{ height: "100%", width: "100%" }}>
-              <Table />
+            <Box>{/* <Subscriptions /> */}</Box>
+            {state.sidebarVisibility !== SidebarVisibility.full && (
+              <Box
+                flexGrow={1} // TODO: fix horizontal resize after zoom in / out window resize.
+                style={{
+                  maxHeight: "100%",
+                  height: "100%",
+                  width: "300px",
+                }}
+              >
+                <TabulatorTable
+                  documents={state.documents}
+                  handleUpdateDocument={handleUpdateDocument}
+                />
+              </Box>
+            )}
+            <Box
+              style={{
+                minWidth: (state.sidebarVisibility === SidebarVisibility.full) ? "100%" : "400px",
+              }}
+            >
+              <Sidebar />
             </Box>
           </Box>
-          <Box>{/* <Properties /> */}</Box>
         </Box>
-      </Box>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <DispatchContext.Provider value={{ dispatch }}>
+        <StateContext.Provider value={{ state }}>
+          {content()}
+        </StateContext.Provider>
+      </DispatchContext.Provider>
     </>
   );
 };
 
+export { DispatchContext, StateContext };
 export default Documents;
