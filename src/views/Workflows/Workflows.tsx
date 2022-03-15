@@ -2,10 +2,8 @@ import React, { useEffect, useState, useReducer } from "react";
 import ProjectNavBar from "../../layouts/Dashboard/ProjectNavBar";
 import { Box, Button, Container, createStyles, makeStyles, TableCell, Theme, Typography, Card, CardContent } from "@material-ui/core";
 import Page from "../../components/Page";
-import Details from "./Details";
 import Workflow from './Workflow';
 import { useApiFetch } from "../../api/ApiFetch";
-
 
 const styles = (theme: Theme) =>
   createStyles({

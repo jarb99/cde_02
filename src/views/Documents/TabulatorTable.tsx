@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { DispatchContext, StateContext } from '../../App';
+import { DispatchContext, StateContext } from './Documents';
 import { ActionType } from '../../api/globalReducer';
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import { updateDocument } from "../../api/API";
@@ -10,8 +10,10 @@ import Document from "../../models/Document";
 let table: any = undefined;
 
 interface Props {
+   documents: Document[]
+   handleUpdateDocument: (obj: any) => void
 }
-
+ 
 const TabulatorTable = (props: Props) => {
 
    let el: any = React.createRef();
@@ -19,11 +21,9 @@ const TabulatorTable = (props: Props) => {
    const { state } = useContext(StateContext);
    const [built, setBuilt] = useState(false);
 
-
-
    useEffect(() => {
-      if (el && state.documents.length !== 0 && table === undefined) createTable(el);
-   }, [el, state.documents])
+      if (el && props.documents.length !== 0 && table === undefined) createTable(el);
+   }, [el, props.documents])
 
    useEffect(() => {
       return  () => { 
@@ -35,18 +35,18 @@ const TabulatorTable = (props: Props) => {
    useEffect(() => {
       if (built) {
          console.log('detected change to state.documents, table:', table);
-         let docs = state.documents.map(r => { return {...r}});
+         let docs = props.documents.map(r => { return {...r}});
          console.log('docs', docs);
          table && table.setData(docs);
       }
-   }, [state.documents])
+   }, [props.documents])
 
    const doUpdateStatus = (cell: any, status: string) => {
       apiSend<Document, any>(() => updateDocument({
          document: cell._cell.row.data,
          documentChange: { status: status }
       })).then(data => {
-         dispatch({
+         props.handleUpdateDocument({
             type: ActionType.updateDocument,
             payload: { document: data.data }
          })
@@ -95,7 +95,8 @@ const TabulatorTable = (props: Props) => {
       console.log("TABLE BEING INITIALISED", table);
       table = new Tabulator(el, {
          height: "100%",
-         data: state.documents,
+         data: props.documents,
+         // debugEventsInternal: true, //console log internal events
          // reactiveData: true,
          groupToggleElement: "header",
          persistenceMode: "cookie", //store persistence information in a cookie
@@ -108,9 +109,9 @@ const TabulatorTable = (props: Props) => {
                width: 50
             },
             { title: "Discipline", field: "Discipline", width: 100 },
+            { title: "Drawing Title", field: "Drawing Title", widthGrow: 2 },
             { title: "Drawing No.", field: "num", width: 180 },
             { title: "Revision", field: "Revision", hozAlign: "center", width: 90 },
-            { title: "Drawing Title", field: "Drawing Title", widthGrow: 2 },
             {
                title: "Status",
                field: "status",
@@ -140,7 +141,7 @@ const TabulatorTable = (props: Props) => {
       table.on("tableBuilt", () => { setBuilt(true) });
    }
 
-   console.log('TabulatorTable.tsx RENDER');
+   console.log('TabulatorTable.tsx RENDER', props.documents);
 
    return <div ref={(refEl) => (el = refEl)} />;
 }
